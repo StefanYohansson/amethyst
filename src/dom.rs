@@ -27,8 +27,9 @@ impl fmt::Display for Node {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match &self.node_type {
             &NodeType::Text(ref x) => writeln!(f, "Node::Text -> {}", x),
-            &NodeType::Element(ref elem) => writeln!(f, "Node::Element -> #{}",
-                                                     elem.id().unwrap())
+            &NodeType::Element(ref elem) =>
+                writeln!(f, "Node::Element -> #{} .{:?}",
+                         elem.id().unwrap(), elem.classes())
         }
     }
 }
@@ -66,13 +67,19 @@ pub fn el(name: String, attrs: AttrMap, children: Vec<Node>) -> Node {
 // fixture node for test purpose
 pub fn fixture_node() -> Node {
     let mut attrs = HashMap::new();
-    attrs.insert("class".to_string(), "btn btn-test".to_string());
-    attrs.insert("id".to_string(), "close".to_string());
+    attrs.insert("class".to_string(), "box".to_string());
+    attrs.insert("id".to_string(), "wrapper".to_string());
     
     let mut childrens = Vec::new();
     let text:Node = text("bfc".to_string());
     childrens.push(text);
-    
+
+    let mut btn_attrs = HashMap::new();
+    btn_attrs.insert("class".to_string(), "btn btn-info".to_string());
+    btn_attrs.insert("id".to_string(), "close".to_string());
+    let close_btn = el("div".to_string(), btn_attrs, vec![]);
+    childrens.push(close_btn);
+
     return el("div".to_string(), attrs, childrens);
 }
 
@@ -80,12 +87,12 @@ pub fn fixture_node() -> Node {
 fn it_create_el() {
     let el:Node = fixture_node();
 
-    assert_eq!(el.children.len(), 1);
+    assert_eq!(el.children.len(), 2);
 
     match el.node_type {
         NodeType::Element(ref elem) => {
-            assert_eq!(elem.id(), Some(&"close".to_string()));
-            assert_eq!(elem.classes().len(), 2);
+            assert_eq!(elem.id(), Some(&"wrapper".to_string()));
+            assert_eq!(elem.classes().len(), 1);
         },
         NodeType::Text(_) => {}
     }
