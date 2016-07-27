@@ -2,7 +2,7 @@ pub mod dom;
 
 use std::iter;
 
-fn inspect_dom(document:dom::Node) {
+fn inspect_dom(document: dom::Node) {
     fn iter_childrens(root_node: &dom::Node, depth: usize) {
         let depth_space: String = iter::repeat(" ").take(depth).collect();
         for child in &root_node.children {
@@ -18,6 +18,6 @@ fn inspect_dom(document:dom::Node) {
 }
 
 fn main() {
-    let el:dom::Node = dom::fixture_node();
+    let el: dom::Node = dom::fixture_node();
     inspect_dom(el);
 }
