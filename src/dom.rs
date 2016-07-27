@@ -71,13 +71,12 @@ pub fn fixture_node() -> Node {
     attrs.insert("id".to_string(), "wrapper".to_string());
     
     let mut childrens = Vec::new();
-    let text:Node = text("bfc".to_string());
-    childrens.push(text);
+    childrens.push(text("bfc".to_string()));
 
     let mut btn_attrs = HashMap::new();
     btn_attrs.insert("class".to_string(), "btn btn-info".to_string());
     btn_attrs.insert("id".to_string(), "close".to_string());
-    let close_btn = el("div".to_string(), btn_attrs, vec![]);
+    let close_btn = el("div".to_string(), btn_attrs, vec![text("Close".to_string())]);
     childrens.push(close_btn);
 
     return el("div".to_string(), attrs, childrens);

@@ -4,7 +4,6 @@ use std::iter;
 
 fn inspect_dom(document:dom::Node) {
     fn iter_childrens(root_node: &dom::Node, depth: usize) {
-        print!("|_ {}", root_node);
         let depth_space: String = iter::repeat(" ").take(depth).collect();
         for child in &root_node.children {
             print!("{} |- {}", depth_space, child);
@@ -14,6 +13,7 @@ fn inspect_dom(document:dom::Node) {
         }
     }
     
+    print!("|_ {}", document);
     iter_childrens(&document, 0);
 }
 
