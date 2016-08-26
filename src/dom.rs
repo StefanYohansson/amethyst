@@ -28,8 +28,8 @@ impl fmt::Display for Node {
         match &self.node_type {
             &NodeType::Text(ref x) => writeln!(f, "Node::Text -> {}", x),
             &NodeType::Element(ref elem) =>
-                writeln!(f, "Node::Element -> #{} .{:?}",
-                         elem.id().unwrap(), elem.classes())
+                writeln!(f, "Node::Element -> <{}> #{} .{:?}",
+                         elem.tag_name, elem.id().unwrap_or(&"".to_string()), elem.classes())
         }
     }
 }
@@ -69,7 +69,7 @@ pub fn fixture_node() -> Node {
     let mut attrs = HashMap::new();
     attrs.insert("class".to_string(), "box".to_string());
     attrs.insert("id".to_string(), "wrapper".to_string());
-    
+
     let mut childrens = Vec::new();
     childrens.push(text("bfc".to_string()));
 

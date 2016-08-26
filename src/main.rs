@@ -1,4 +1,8 @@
+#[macro_use]
+extern crate nom;
+
 pub mod dom;
+pub mod html;
 
 use std::iter;
 
@@ -12,12 +16,15 @@ fn inspect_dom(document: dom::Node) {
             }
         }
     }
-    
+
     print!("|_ {}", document);
     iter_childrens(document.clone(), 0);
 }
 
+fn parse_html() -> dom::Node {
+    return html::parse("<html> <div>oi</div> </html>".to_string());
+}
+
 fn main() {
-    let el: dom::Node = dom::fixture_node();
-    inspect_dom(el);
+    inspect_dom(parse_html());
 }
